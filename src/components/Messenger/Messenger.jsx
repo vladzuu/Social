@@ -1,28 +1,15 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
-import "./dialogs.css"
+import Dialog from "./Element/Dialog";
+import Message from "./Element/Message";
+import "./messenger.css"
 
 
-const Dialog = (props) => {
-   return (
-      <div className="user-dialogs">
-         <NavLink to={'/dialogs/' + props.id}>{props.name}</NavLink>
-      </div>
-   )
-}
 
-const Message = (props) => {
 
-   return (
-      <div className='message'>
-         {props.message}
-      </div>
-   )
-}
+const Messenger = (props) => {
 
-const Dialogs = (props) => {
    const dialogElement = props.dialogData.map((person, index) => {
-      return <Dialog name={person.name} id={person.id} key={index} />
+      return <Dialog dialogData={person} />
    });
 
    const messageElement = props.messageData.map((message, index) => {
@@ -41,4 +28,4 @@ const Dialogs = (props) => {
    )
 }
 
-export default Dialogs;
+export default Messenger;

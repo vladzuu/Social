@@ -4,7 +4,7 @@ import Header from './components/Header/Header';
 import Navbar from './components/Navbar/Navbar';
 import Profile from './components/Profile/Profile';
 import Footer from './components/Footer/Footer';
-import Dialogs from './components/Dialogs/Dialogs';
+import Messenger from './components/Messenger/Messenger';
 import Music from './components/Music/Music';
 
 function App(props) {
@@ -15,8 +15,8 @@ function App(props) {
             <Navbar />
             <div className='main'>
                <Routes>
-                  <Route path='profile' element={<Profile commentData={props.commentData} />} />
-                  <Route path='/dialogs/*' element={<Dialogs messageData={props.messageData} dialogData={props.dialogData} />} />
+                  <Route path='profile' element={<Profile commentData={props.state.commentData} />} />
+                  <Route path='messenger/*' element={<Messenger messageData={props.state.messageData} dialogData={props.state.dialogData} />} />
                   <Route path='music' element={<Music />} />
                </Routes>
 
