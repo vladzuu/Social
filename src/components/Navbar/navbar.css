@@ -1,0 +1,10 @@
+.navbar{
+   background-color: violet;
+   grid-area: navbar;
+   padding: 20px;
+   color: black;
+   border-radius: 4px;
+}
+.link-Active{
+   color: gold;
+}
