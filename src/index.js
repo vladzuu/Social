@@ -1,18 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
+import './index.scss';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import state from './redux/state';
-
-
+import store from './redux/state';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-   <React.StrictMode>
-      <App state={state} />
-   </React.StrictMode>
-);
+const rerender = (store) => {
+   root.render(
+      <React.StrictMode>
+         <App store={store} />
+      </React.StrictMode>
+   )
+}
+
+rerender(store);
+
+store.observer(rerender);
 
 reportWebVitals();

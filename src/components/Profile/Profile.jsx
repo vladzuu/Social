@@ -1,17 +1,26 @@
 import React from "react";
 import Comment from "./Comments/Comment";
-import './profile.css'
+import './profile.scss'
 
 const Main = (props) => {
 
-
    const commentElement = props.commentData.map(comment => <Comment text={comment.comment} likeCount={comment.like} />)
+   const areaMessage = React.createRef();
+
+   const onPostChange = () => {
+      const text = areaMessage.current.value;
+      props.updatePostChange(text)
+   };
+
+   const sendPost = () => {
+      props.func()
+   }
 
    return (
-      <div className="Profile">
-         <textarea></textarea>
+      <div className="profile">
+         <textarea onChange={onPostChange} ref={areaMessage} value={props.newPost.text}></textarea>
          <div>
-            <button>Send</button>
+            <button onClick={sendPost}>Send</button>
             <button>delete</button>
          </div>
          {commentElement}

@@ -1,5 +1,6 @@
+import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import './App.css';
+import './App.scss';
 import Header from './components/Header/Header';
 import Navbar from './components/Navbar/Navbar';
 import Profile from './components/Profile/Profile';
@@ -15,8 +16,17 @@ function App(props) {
             <Navbar />
             <div className='main'>
                <Routes>
-                  <Route path='profile' element={<Profile commentData={props.state.commentData} />} />
-                  <Route path='messenger/*' element={<Messenger messageData={props.state.messageData} dialogData={props.state.dialogData} />} />
+                  <Route path='profile' element={
+                     <Profile
+                        commentData={props.store.commentData}
+                        func={props.func}
+                        newPost={props.state.newPost}
+                        updatePostChange={props.updatePostChange} />} />
+
+                  <Route path='messenger/*' element={
+                     <Messenger
+                        messageData={props.state.messageData}
+                        dialogData={props.state.dialogData} />} />
                   <Route path='music' element={<Music />} />
                </Routes>
 

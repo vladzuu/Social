@@ -1,12 +1,21 @@
 import React from "react";
 import Dialog from "./Element/Dialog";
 import Message from "./Element/Message";
-import "./messenger.css"
+import "./messenger.scss"
 
 
 
 
 const Messenger = (props) => {
+
+
+
+   const areaMessage = React.createRef();
+   const buttonClick = () => {
+      const text = areaMessage.current.value;
+      console.log(text)
+      areaMessage.current.value = '';
+   }
 
    const dialogElement = props.dialogData.map((person, index) => {
       return <Dialog dialogData={person} />
@@ -21,10 +30,16 @@ const Messenger = (props) => {
          <div className="dialogs">
             {dialogElement}
          </div>
-         <div className="dialog">
-            {messageElement}
-         </div>
-      </div >
+         <div className="mes-container">
+            <div className="dialog">
+               {messageElement}
+            </div>
+            <div className="sendMessage">
+               <textarea ref={areaMessage}></textarea>
+               <button onClick={buttonClick}>Send </button>
+            </div>
+         </div >
+      </div>
    )
 }
 
