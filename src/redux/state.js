@@ -23,24 +23,26 @@ let store = {
          { id: 'user', message: 'ответ на второе сообщение влалдылвабьждывбжадбыжважаппвапвапвапв апвапавпвапвапавпавпвапвапвапапва пвапвапвапва' }
       ]
    },
-   getState() {
-      return this._state;
-   },
    _rerender() {
       console.log('1')
    },
-   updatePostChange(text) {
-      this._state.newPost.text = text
-      this._rerender(state);
-   },
-   addPost() {
-      _state.commentData.push({ comment: state.newPost.text, like: '0' })
-      this._rerender(this._state);
-      this._state.newPost.text = '';
+   getState() {
+      return this._state;
    },
 
-   observer(obs) {
+   subscribe(obs) {
       this._rerender = obs;
+   },
+
+   dispatch(action) {
+      if (action.type === 'updatePostChange') {
+         this._state.newPost.text = action.text
+         this._rerender(this._state);
+      } else if (action.type === 'addPost') {
+         this._state.commentData.push({ comment: this._state.newPost.text, like: '0' })
+         this._rerender(this._state);
+         this._state.newPost.text = '';
+      }
    }
 };
 

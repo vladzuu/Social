@@ -1,6 +1,10 @@
 import React from "react";
+import { connect } from "react-redux";
 import Comment from "./Comments/Comment";
 import './profile.scss'
+import { addPostCreator, updatePostCreator } from "../../redux/profile-reducer";
+
+
 
 const Main = (props) => {
 
@@ -9,12 +13,12 @@ const Main = (props) => {
 
    const onPostChange = () => {
       const text = areaMessage.current.value;
-      props.updatePostChange(text)
+      props.dispatch(updatePostCreator(text))
    };
 
    const sendPost = () => {
-      props.func()
-   }
+      props.dispatch(addPostCreator())
+   };
 
    return (
       <div className="profile">
@@ -27,4 +31,7 @@ const Main = (props) => {
       </div>
    )
 }
+
+
+
 export default Main;

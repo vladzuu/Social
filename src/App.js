@@ -18,15 +18,15 @@ function App(props) {
                <Routes>
                   <Route path='profile' element={
                      <Profile
-                        commentData={props.store.commentData}
-                        func={props.func}
-                        newPost={props.state.newPost}
-                        updatePostChange={props.updatePostChange} />} />
+                        commentData={props.getState().profileReduce.commentData}
+                        newPost={props.getState().profileReduce.newPost}
+                        dispatch={props.dispatch} />} />
+
 
                   <Route path='messenger/*' element={
                      <Messenger
-                        messageData={props.state.messageData}
-                        dialogData={props.state.dialogData} />} />
+                        messageData={props.getState().messageData}
+                        dialogData={props.getState().dialogData} />} />
                   <Route path='music' element={<Music />} />
                </Routes>
 
