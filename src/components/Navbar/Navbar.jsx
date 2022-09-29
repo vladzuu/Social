@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import './navbar.css'
+import './navbar.scss'
 
 const setActive = data => data.isActive ? 'link-Active' : '';
 const Navbar = () => {
@@ -11,6 +11,7 @@ const Navbar = () => {
             <li><NavLink to='/messenger' className={setActive}>Dialogs</NavLink></li>
             <li><NavLink to='/music' className={setActive}>Music</NavLink></li>
             <li><NavLink to='/news' className={setActive}>News</NavLink></li>
+            <li><NavLink to='/findUser' className={setActive}>Find User</NavLink></li>
             <li><NavLink to='/setting' className={setActive}>Setting</NavLink></li>
          </ul>
       </div >

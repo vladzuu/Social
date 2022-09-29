@@ -1,26 +1,43 @@
 .dialogs-wrapper{
-   height: 100vh;
+   height: 100%;
    display: grid;
    grid-template-columns: minmax(200px,2fr) 6fr;
+
+   textarea{
+      margin: 20px;
+      border-radius: 4px;
+   }
 }
 
 .dialogs{
    background-color: grey;
    text-align: center;
    padding: 20px;
-   
 }
 .user-dialogs{
    display: flex;
    align-items: center;
    padding-top: 10px;
    text-align: center;
+   a{
+      padding-left: 20px;
+   }
 }
-.user-dialogs a{
-  padding-left: 20px;
-}
+
 .avaMessage{
 height: 60px;
 width: 60px;
 border-radius: 50%;
+}
+
+.sendMessage{
+   display: flex;
+   align-items: flex-end;
+
+   button{
+      margin: 0px 20px 20px 0px;
+      width: 70px;
+      height: 30px;
+      background-color: rgb(214, 214, 214);
+   }
 }

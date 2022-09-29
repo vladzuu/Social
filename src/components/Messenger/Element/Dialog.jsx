@@ -2,7 +2,6 @@ import React from "react"
 import { NavLink } from "react-router-dom";
 
 const Dialog = (props) => {
-   console.log(props.dialogData.ava)
    return (
       <div className="user-dialogs">
          <img className="avaMessage" src={props.dialogData.ava}></img>
@@ -12,4 +11,3 @@ const Dialog = (props) => {
 };
 
 export default Dialog
-// 

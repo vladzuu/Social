@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import Dialog from "./Element/Dialog";
 import Message from "./Element/Message";
 import "./messenger.scss"
-import { updateMessageAC, addMessageAC } from "../../redux/messenger-reducer";
+import { updateMessageCreator, addMessageCreator } from "../../redux/messenger-reducer";
 
 const Messenger = (props) => {
    const areaMessage = React.createRef();
@@ -50,10 +50,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
    return {
       addMessage: () => {
-         dispatch(addMessageAC())
+         dispatch(addMessageCreator())
       },
       updateMessage: (message) => {
-         dispatch(updateMessageAC(message))
+         dispatch(updateMessageCreator(message))
       }
    }
 }
