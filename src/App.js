@@ -3,38 +3,32 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.scss';
 import Header from './components/Header/Header';
 import Navbar from './components/Navbar/Navbar';
-import Profile from './components/Profile/Profile';
+import Profile from './components/Profile/ContainerProfile';
 import Footer from './components/Footer/Footer';
 import Messenger from './components/Messenger/Messenger';
 import Music from './components/Music/Music';
+import UserElement from './components/Find users/containerFindUser';
+
 
 function App(props) {
    return (
-      <BrowserRouter>
-         <div className="Wrapper">
-            <Header />
-            <Navbar />
-            <div className='main'>
-               <Routes>
-                  <Route path='profile' element={
-                     <Profile
-                        commentData={props.getState().profileReduce.commentData}
-                        newPost={props.getState().profileReduce.newPost}
-                        dispatch={props.dispatch} />} />
 
+      <div className="Wrapper">
+         <Header />
+         <Navbar />
+         <div className='main'>
+            <Routes>
+               <Route path='profile' element={
+                  <Profile />} />
 
-                  <Route path='messenger/*' element={
-                     <Messenger
-                        messageData={props.getState().messageData}
-                        dialogData={props.getState().dialogData} />} />
-                  <Route path='music' element={<Music />} />
-               </Routes>
-
-            </div>
-            <Footer />
-
+               <Route path='messenger/*' element={
+                  <Messenger />} />
+               <Route path='music' element={<Music />} />
+               <Route path='findUser' element={<UserElement />} />
+            </Routes>
          </div>
-      </BrowserRouter>
+         <Footer />
+      </div>
    );
 }
 

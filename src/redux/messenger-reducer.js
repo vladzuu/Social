@@ -10,10 +10,31 @@ let initialState = {
       { id: 'user', message: 'первое сообщениев валызщлвазщлывлабывжаббывждабыждв' },
       { id: 'companion', message: 'второе сообщение ваыааываываываываываыв' },
       { id: 'user', message: 'ответ на второе сообщение влалдылвабьждывбжадбыжважаппвапвапвапв апвапавпвапвапавпавпвапвапвапапва пвапвапвапва' }
-   ]
+   ],
+   messageNew: {
+      message: 'Add new Message',
+   }
+
 }
 const messengerReduce = (state = initialState, action) => {
-   return state;
+   switch (action.type) {
+      case 'onChangeMessage': {
+         return {
+            ...state,
+            messageNew: { message: action.text }
+         }
+      };
+      case 'sendMessage':
+         return {
+            ...state,
+            messageData: [...state.messageData, { id: 'user', message: state.messageNew.message }],
+            messageNew: { message: '' }
+         };
+      default: return state;
+   }
 }
+
+export const addMessageAC = () => ({ type: 'sendMessage' });
+export const updateMessageAC = (text) => ({ type: 'onChangeMessage', text: text });
 
 export default messengerReduce;

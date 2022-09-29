@@ -4,18 +4,20 @@ import './index.scss';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import store from './redux/redux-store';
+import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const rerender = (state) => {
    root.render(
-      <React.StrictMode>
-         <App state={state}
-            store={store}
-            updatePostChange={store.dispatch.bind(store)}
-            getState={store.getState.bind(store)}
-            dispatch={store.dispatch.bind(store)} />
-      </React.StrictMode>
+      <BrowserRouter>
+         {/* <React.StrictMode> */}
+         <Provider store={store}>
+            <App />
+         </Provider>
+         {/* </React.StrictMode> */}
+      </BrowserRouter>
    )
 }
 

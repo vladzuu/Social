@@ -14,16 +14,19 @@ let initialState = {
 const profileReduce = (state = initialState, action) => {
    switch (action.type) {
       case 'updatePostChange':
-         console.log(action)
-         state.newPost.text = action.text;
-         return state;
-      case 'addPost':
-         state.commentData.push({ comment: state.newPost.text, like: '0' })
-         state.newPost.text = '';
-         return state;
+         return {
+            ...state,
+            newPost: { ...state.newPost, text: action.text }
+         }
+      case 'addPost': {
+         return {
+            ...state,
+            commentData: [...state.commentData, { comment: state.newPost.text, like: '0' }],
+            newPost: { ...state.newPost, text: '' }
+         }
+      }
       default:
          return state;
-
    }
 }
 
