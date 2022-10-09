@@ -1,5 +1,9 @@
 let initialState = {
-   users: []
+   users: [],
+   currentPage: 1,
+   totalCount: 0,
+   isFetching: false,
+
 }
 
 const findUserReduce = (state = initialState, action) => {
@@ -26,15 +30,31 @@ const findUserReduce = (state = initialState, action) => {
             })
          };
       case 'pushState':
+
          return {
-            ...state, users: [...state.users, ...action.users],
-         }
+            ...state, users: [...action.users]
+         };
+      case 'pushCount':
+         return {
+            ...state, totalCount: action.count
+         };
+      case 'currentPage':
+
+         return {
+            ...state, currentPage: action.current
+         };
+      case 'toggleIsFetching':
+         return {
+            ...state, isFetching: action.isFetching
+         };
       default: return state;
    }
 }
 
-export const subscribeAC = (userId) => ({ type: 'subscribe', userId });
-export const unsubscribeAC = (userId) => ({ type: 'unsubscribe', userId });
-export const setStateAC = (users) => ({ type: 'pushState', users })
-
+export const subscribe = (userId) => ({ type: 'subscribe', userId });
+export const unsubscribe = (userId) => ({ type: 'unsubscribe', userId });
+export const setState = (users) => ({ type: 'pushState', users });
+export const setCount = (count) => ({ type: 'pushCount', count });
+export const setCurrentPage = (current) => ({ type: 'currentPage', current })
+export const toggleIsFetching = (isFetching) => ({ type: 'toggleIsFetching', isFetching })
 export default findUserReduce;

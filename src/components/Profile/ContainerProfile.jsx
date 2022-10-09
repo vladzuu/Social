@@ -1,8 +1,38 @@
 import React from "react";
 import { connect } from "react-redux";
 import './profile.scss'
-import { addPostCreator, updatePostCreator } from "../../redux/profile-reducer";
-import Profile from "./Profile"
+import { onPostChange, addPost, toggleIsFetching } from "../../redux/profile-reducer";
+import ProfileOther from "./Profile"
+import Preloader from "../Common/Preloader/Preloader";
+import axios from "axios";
+
+
+class Profile extends React.Component {
+
+   componentDidMount() {
+      this.props.toggleIsFetching(true)
+      axios.get('https://social-network.samuraijs.com/api/1.0/profile/26107')
+         .then(response => this.props.toggleIsFetching(false)
+         )
+   }
+
+
+
+   render() {
+      return (
+         <>
+            <Preloader
+               isFetching={this.props.toggleIsFetching} />
+            <ProfileOther
+               commentData={this.props.commentData}
+               newPost={this.props.newPost}
+               onPostChange={this.props.onPostChange}
+               addPost={this.props.addPost}
+            />
+         </>
+      )
+   }
+}
 
 const mapStateToProps = (state) => {
    return {
@@ -11,16 +41,6 @@ const mapStateToProps = (state) => {
    }
 };
 
-const mapDispatchToProps = (dispatch) => {
-   return {
-      onPostChange: (text) => {
-         dispatch(updatePostCreator(text))
-      },
-      sendPost: () => {
-         dispatch(addPostCreator())
-      }
-   }
-};
-const ContainerFindUser = connect(mapStateToProps, mapDispatchToProps)(Profile);//create connect
+const ContainerProfile = connect(mapStateToProps, { onPostChange, addPost, toggleIsFetching })(Profile);//create connect
 
-export default ContainerFindUser;
+export default ContainerProfile;

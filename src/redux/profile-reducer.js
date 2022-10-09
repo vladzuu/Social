@@ -9,6 +9,7 @@ let initialState = {
       { comment: 'What what what what?', like: '23' },
       { comment: "ok, ok, ok, ok!", like: '5' },
    ],
+   isFetching: false
 }
 
 const profileReduce = (state = initialState, action) => {
@@ -25,11 +26,16 @@ const profileReduce = (state = initialState, action) => {
             newPost: { ...state.newPost, text: '' }
          }
       }
+      case 'isFetching':
+         return {
+            ...state, isFetching: action.isFetching
+         }
       default:
          return state;
    }
 }
 
-export const addPostCreator = () => ({ type: 'addPost' });
-export const updatePostCreator = (text) => ({ type: 'updatePostChange', text: text });
+export const addPost = () => ({ type: 'addPost' });
+export const onPostChange = (text) => ({ type: 'updatePostChange', text: text });
+export const toggleIsFetching = (isFetching) => ({ type: 'isFetching', isFetching })
 export default profileReduce;

@@ -3,6 +3,8 @@
    display: grid;
    color:aqua;
    justify-items: start;
+   max-width: 1200px;
+   
 
    .user-find{
       display: flex;
@@ -36,6 +38,17 @@
       margin: 0px 0px 20px 20px;
       border-radius: 5px;
       border: 2px black solid;
+      
+   }
+   .pages{
+      max-width: 500px;
+      display: flex;
+      justify-content: center;
+   }
+   .page-scroll{
+      margin: 5px;
+      padding: 5px;
+      cursor: pointer;
       
    }
 }

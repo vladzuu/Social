@@ -4,23 +4,23 @@ import './profile.scss'
 import { addPostCreator, updatePostCreator } from "../../redux/profile-reducer";
 
 
-const Profile = (props) => {
+const ProfileOther = (props) => {
    const commentElement = props.commentData.map(comment => <Comment text={comment.comment} likeCount={comment.like} />)
 
    const areaMessage = React.createRef();
 
-   const onPostChange1 = () => {
+   const onPostChange = () => {
       const text = areaMessage.current.value;
       props.onPostChange(text)
    };
 
    const sendPost = () => {
-      props.sendPost()
+      props.addPost()
    }
 
    return (
       <div className="profile">
-         <textarea onChange={onPostChange1} ref={areaMessage} value={props.newPost.text}></textarea>
+         <textarea onChange={onPostChange} ref={areaMessage} value={props.newPost.text}></textarea>
          <div>
             <button onClick={sendPost}>Send</button>
             <button>delete</button>
@@ -31,4 +31,4 @@ const Profile = (props) => {
 
 }
 
-export default Profile;
+export default ProfileOther;
