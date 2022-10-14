@@ -16,7 +16,6 @@ const userSelectedReduce = (state = initialState, action) => {
             ...state, user: { ...action.user }
          };
       case 'toggleIsFetching':
-         console.log(action.isFetching)
          return {
             ...state, isFetching: action.isFetching
          };

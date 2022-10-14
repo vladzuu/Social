@@ -26,7 +26,7 @@ function App(props) {
                   <Messenger />} />
                <Route path='music' element={<Music />} />
                <Route path='findUser' element={<UserElement />} />
-               <Route path='findUser/id/*' element={<UserSelect />} />
+               <Route path='findUser/id/:userId' element={<UserSelect />} />
             </Routes>
          </div>
          <Footer />

@@ -4,14 +4,15 @@ import "./findUser.scss"
 import { setState, isFetching } from "../../redux/user-selected-reducer";
 import axios from "axios";
 import Preloader from "../Common/Preloader/Preloader";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 
 class ContainerSelectedUser extends React.Component {
    componentDidMount() {
       this.props.isFetching(true)
-      axios.get('https://social-network.samuraijs.com/api/1.0/profile/19000')
+      axios.get('https://social-network.samuraijs.com/api/1.0/profile/' + this.props.router.params.userId)
          .then(response => {
-            console.log(response.data)
+
             this.props.isFetching(false)
             this.props.setState(response.data)
          })
@@ -28,6 +29,22 @@ class ContainerSelectedUser extends React.Component {
    }
 }
 
+function withRouter(Component) {
+   function ComponentWithRouterProp(props) {
+      let location = useLocation();
+      let navigate = useNavigate();
+      let params = useParams();
+      return (
+         <Component
+            {...props}
+            router={{ location, navigate, params }}
+         />
+      );
+   }
+
+   return ComponentWithRouterProp;
+}
+
 const mapStateToProps = (state) => {
    return {
       user: state.userSelectedReduce.user,
@@ -37,6 +54,6 @@ const mapStateToProps = (state) => {
 
 const UserSelect = connect(mapStateToProps, {
    setState, isFetching
-})(ContainerSelectedUser)
+})(withRouter(ContainerSelectedUser))
 
 export default UserSelect;
