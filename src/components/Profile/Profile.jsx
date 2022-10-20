@@ -1,11 +1,10 @@
 import React from "react";
 import Comment from "./Comments/Comment";
 import './profile.scss'
-import { addPostCreator, updatePostCreator } from "../../redux/profile-reducer";
 
 
-const ProfileOther = (props) => {
-   const commentElement = props.commentData.map(comment => <Comment text={comment.comment} likeCount={comment.like} />)
+const ProfileOther = React.memo((props) => {
+   const commentElement = props.commentData.map(comment => <Comment text={comment.comment} likeCount={comment.like} id={comment.id} />)
 
    const areaMessage = React.createRef();
 
@@ -28,7 +27,6 @@ const ProfileOther = (props) => {
          {commentElement}
       </div>
    )
-
-}
+})
 
 export default ProfileOther;

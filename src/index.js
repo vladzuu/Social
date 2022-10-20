@@ -7,27 +7,15 @@ import store from './redux/redux-store';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 
-
 const root = ReactDOM.createRoot(document.getElementById('root'));
-const rerender = (state) => {
-   root.render(
-      <BrowserRouter>
-         {/* <React.StrictMode> */}
+root.render(
+   <BrowserRouter>
+      <React.StrictMode>
          <Provider store={store}>
             <App />
          </Provider>
-         {/* </React.StrictMode> */}
-      </BrowserRouter>
-   )
-}
-
-rerender(store.getState());
-
-
-
-store.subscribe(() => {
-   let state = store.getState();
-   rerender(state);
-});
+      </React.StrictMode>
+   </BrowserRouter>
+)
 
 reportWebVitals();

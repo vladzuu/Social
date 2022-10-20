@@ -4,6 +4,7 @@ import Dialog from "./Element/Dialog";
 import Message from "./Element/Message";
 import "./messenger.scss"
 import { updateMessageAC, addMessageAC } from "../../redux/messenger-reducer";
+import { Navigate } from "react-router-dom";
 
 const Messenger = (props) => {
    const areaMessage = React.createRef();
@@ -21,6 +22,8 @@ const Messenger = (props) => {
    const messageElement = props.messageData.map((message, index) => {
       return <Message id={message.id} message={message.message} key={index} />
    });
+   // if (!props.isAuth) { return <Navigate to={'/login'} /> }
+
    return (
       <div className="dialogs-wrapper">
          <div className="dialogs">
@@ -44,6 +47,7 @@ const mapStateToProps = (state) => {
       messageData: state.messengerReduce.messageData,
       dialogData: state.messengerReduce.dialogData,
       messageNew: state.messengerReduce.messageNew.message,
+      isAuth: state.auth.isAuth
    }
 };
 

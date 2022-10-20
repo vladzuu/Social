@@ -1,3 +1,5 @@
+import { usersApi } from '../api/api';
+
 let initialState = {
    users: [],
    currentPage: 1,
@@ -13,7 +15,7 @@ const findUserReduce = (state = initialState, action) => {
             ...state,
             users: state.users.map((user) => {
                if (action.userId === user.id) {
-                  return { ...user, subscribe: true }
+                  return { ...user, followed: true }
                }
                return user;
             })
@@ -24,13 +26,12 @@ const findUserReduce = (state = initialState, action) => {
             ...state,
             users: state.users.map((user) => {
                if (action.userId === user.id) {
-                  return { ...user, subscribe: false }
+                  return { ...user, followed: false }
                }
                return user;
             })
          };
       case 'pushState':
-
          return {
             ...state, users: [...action.users]
          };
@@ -39,7 +40,6 @@ const findUserReduce = (state = initialState, action) => {
             ...state, totalCount: action.count
          };
       case 'currentPage':
-
          return {
             ...state, currentPage: action.current
          };
@@ -57,4 +57,34 @@ export const setState = (users) => ({ type: 'pushState', users });
 export const setCount = (count) => ({ type: 'pushCount', count });
 export const setCurrentPage = (current) => ({ type: 'currentPage', current })
 export const toggleIsFetching = (isFetching) => ({ type: 'toggleIsFetching', isFetching })
+
+export const getUsers = (pageNumber) => {
+   return (dispatch) => {
+      dispatch(toggleIsFetching(true))
+      usersApi.getUsers(pageNumber)
+         .then(response => {
+            dispatch(toggleIsFetching(false))
+            dispatch(setState(response.data.items))
+            dispatch(setCount(response.data.totalCount))
+            dispatch(setCurrentPage(pageNumber))
+         })
+   }
+}
+
+export const follow = (userId) => {
+   return (dispatch) => {
+      usersApi.follow(userId)
+         .then(() => {
+            dispatch(subscribe(userId))
+         })
+   }
+}
+export const unfollow = (userId) => {
+   return (dispatch) => {
+      usersApi.unfollow(userId)
+         .then(() => {
+            dispatch(unsubscribe(userId))
+         })
+   }
+}
 export default findUserReduce;

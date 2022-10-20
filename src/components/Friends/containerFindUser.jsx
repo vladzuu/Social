@@ -1,37 +1,25 @@
 import React from "react";
 import { connect } from "react-redux";
 import "./findUser.scss"
-import { setState, subscribe, unsubscribe, setCount, setCurrentPage, toggleIsFetching } from "../../redux/find-user-reducer";
-import axios from "axios";
+import { subscribe, unsubscribe, setCurrentPage, getUsers, follow, unfollow } from "../../redux/find-user-reducer";
 import FindUser from "./FindUser";
 import Preloader from "../Common/Preloader/Preloader";
+import { Navigate } from 'react-router-dom'
 
 class ContainerFindUser extends React.Component {
 
    componentDidMount() {
-      this.props.toggleIsFetching(true)
-      axios.get('https://social-network.samuraijs.com/api/1.0/users')
-         .then(response => {
-            this.props.toggleIsFetching(false)
-            this.props.setState(response.data.items)
-            this.props.setCount(response.data.totalCount)
-         })
+      this.props.getUsers('1')
    };
 
    onChangePage = (pageNumber) => {
-      this.props.toggleIsFetching(true)
-      this.props.setCurrentPage(pageNumber)
-      axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}`)
-         .then(response => {
-            this.props.setState(response.data.items)
-            this.props.toggleIsFetching(false)
-         })
+      this.props.getUsers(pageNumber)
    }
 
    render = () => {
+      if (!this.props.isAuth) { return <Navigate to={'/login'} /> }
       return (
          <>
-
             <Preloader isFetching={this.props.isFetching} />
             <FindUser
                changePage={this.onChangePage}
@@ -40,6 +28,8 @@ class ContainerFindUser extends React.Component {
                subscribe={this.props.subscribe}
                totalCount={this.props.totalCount}
                currentPage={this.props.currentPage}
+               follow={this.props.follow}
+               unfollow={this.props.unfollow}
 
             />
 
@@ -55,11 +45,12 @@ const mapStateToProps = (state) => {
       users: state.findUserReduce.users,
       currentPage: state.findUserReduce.currentPage,
       isFetching: state.findUserReduce.isFetching,
+      isAuth: state.auth.isAuth
    }
 }
 
 const UserElement = connect(mapStateToProps, {
-   subscribe, unsubscribe, setState, setCount, setCurrentPage, toggleIsFetching
+   subscribe, unsubscribe, setCurrentPage, getUsers, follow, unfollow
 })(ContainerFindUser)
 
 

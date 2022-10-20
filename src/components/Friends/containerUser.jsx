@@ -10,7 +10,8 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 class ContainerSelectedUser extends React.Component {
    componentDidMount() {
       this.props.isFetching(true)
-      axios.get('https://social-network.samuraijs.com/api/1.0/profile/' + this.props.router.params.userId)
+      axios.get('https://social-network.samuraijs.com/api/1.0/profile/' + this.props.router.params.userId,
+         { withCredentials: true, headers: { 'API-KEY': 'b9394587-3e7a-482d-a7f6-fa24cc2f35ca' } })
          .then(response => {
 
             this.props.isFetching(false)
