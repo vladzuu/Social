@@ -17,7 +17,7 @@ class ContainerFindUser extends React.Component {
    }
 
    render = () => {
-      if (!this.props.isAuth) { return <Navigate to={'/login'} /> }
+      if (!this.props.isAuth) return <Navigate to={'/login'} />
       return (
          <>
             <Preloader isFetching={this.props.isFetching} />

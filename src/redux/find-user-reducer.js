@@ -1,5 +1,12 @@
 import { usersApi } from '../api/api';
 
+const SUBSCRIBE = 'social/findUser/subscribe'
+const UNSUBSCRIBE = 'social/findUser/unsubscribe'
+const PUSH_STATE = 'social/findUser/pushState'
+const PUSH_COUNT = 'social/findUser/pushCount'
+const CURRENT_PAGE = 'social/findUser/currentPage'
+const TOGGLE_IS_FETCHING = 'social/findUser/toggleIsFetching'
+
 let initialState = {
    users: [],
    currentPage: 1,
@@ -10,7 +17,7 @@ let initialState = {
 
 const findUserReduce = (state = initialState, action) => {
    switch (action.type) {
-      case 'subscribe': {
+      case SUBSCRIBE: {
          return {
             ...state,
             users: state.users.map((user) => {
@@ -21,7 +28,7 @@ const findUserReduce = (state = initialState, action) => {
             })
          }
       };
-      case 'unsubscribe':
+      case UNSUBSCRIBE:
          return {
             ...state,
             users: state.users.map((user) => {
@@ -31,19 +38,19 @@ const findUserReduce = (state = initialState, action) => {
                return user;
             })
          };
-      case 'pushState':
+      case PUSH_STATE:
          return {
             ...state, users: [...action.users]
          };
-      case 'pushCount':
+      case PUSH_COUNT:
          return {
             ...state, totalCount: action.count
          };
-      case 'currentPage':
+      case CURRENT_PAGE:
          return {
             ...state, currentPage: action.current
          };
-      case 'toggleIsFetching':
+      case TOGGLE_IS_FETCHING:
          return {
             ...state, isFetching: action.isFetching
          };
@@ -51,12 +58,12 @@ const findUserReduce = (state = initialState, action) => {
    }
 }
 
-export const subscribe = (userId) => ({ type: 'subscribe', userId });
-export const unsubscribe = (userId) => ({ type: 'unsubscribe', userId });
-export const setState = (users) => ({ type: 'pushState', users });
-export const setCount = (count) => ({ type: 'pushCount', count });
-export const setCurrentPage = (current) => ({ type: 'currentPage', current })
-export const toggleIsFetching = (isFetching) => ({ type: 'toggleIsFetching', isFetching })
+export const subscribe = (userId) => ({ type: SUBSCRIBE, userId });
+export const unsubscribe = (userId) => ({ type: UNSUBSCRIBE, userId });
+export const setState = (users) => ({ type: PUSH_STATE, users });
+export const setCount = (count) => ({ type: PUSH_COUNT, count });
+export const setCurrentPage = (current) => ({ type: CURRENT_PAGE, current })
+export const toggleIsFetching = (isFetching) => ({ type: TOGGLE_IS_FETCHING, isFetching })
 
 export const getUsers = (pageNumber) => {
    return (dispatch) => {
@@ -72,19 +79,15 @@ export const getUsers = (pageNumber) => {
 }
 
 export const follow = (userId) => {
-   return (dispatch) => {
-      usersApi.follow(userId)
-         .then(() => {
-            dispatch(subscribe(userId))
-         })
+   return async (dispatch) => {
+      await usersApi.follow(userId)
+      dispatch(subscribe(userId))
    }
 }
 export const unfollow = (userId) => {
-   return (dispatch) => {
-      usersApi.unfollow(userId)
-         .then(() => {
-            dispatch(unsubscribe(userId))
-         })
+   return async (dispatch) => {
+      await usersApi.unfollow(userId)
+      dispatch(unsubscribe(userId))
    }
 }
 export default findUserReduce;

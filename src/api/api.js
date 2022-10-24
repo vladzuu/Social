@@ -26,10 +26,15 @@ export const profileApi = {
    setStatus(status) {
       return instance.put('/profile/status', { status })
    },
-   MyProfile(id) {
+   getUserProfile(id) {
       return instance.get(`profile/${id}`)
    },
    getStatus(id) {
       return instance.get(`profile/status/${id}`)
+   },
+   addPhotoProfile(photoFile) {
+      const formData = new FormData();
+      formData.append("image", photoFile);
+      return instance.put(`profile/photo`, formData);
    }
 }

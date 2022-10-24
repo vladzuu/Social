@@ -16,8 +16,8 @@ const Messenger = (props) => {
    const sendMessage = () => {
       props.addMessage()
    };
-   const dialogElement = props.dialogData.map((person, index) => {
-      return <Dialog dialogData={person} />
+   const dialogElement = props.dialogData.map((person) => {
+      return <Dialog dialogData={person} key={person.id} />
    });
    const messageElement = props.messageData.map((message, index) => {
       return <Message id={message.id} message={message.message} key={index} />

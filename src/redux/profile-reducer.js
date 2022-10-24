@@ -1,7 +1,34 @@
-import { profileApi } from '../api/api'
+import { profileApi } from '../api/api';
 
+const GET_STATUS = 'social/profile/getStatus';
+const UPDATE_POST_CHANGE = 'social/profile/updatePostChange';
+const ADD_POST = 'social/profile/addPost';
+const IS_FETCHING = 'social/profile/isFetching';
+const SET_USER_DATA = 'social/profile/SETUserData';
+const GET_CHANGE_PHOTO = 'social/profile/getChangePhoto';
 
 let initialState = {
+   userProfile: {
+      aboutMe: null,
+      contacts: {
+         facebook: null,
+         website: null,
+         vk: null,
+         twitter: null,
+         instagram: null,
+         youtube: null,
+         github: null,
+         mainLink: null
+      },
+      lookingForAJob: false,
+      lookingForAJobDescription: null,
+      fullName: '',
+      userId: '',
+      photos: {
+         small: null,
+         large: null
+      }
+   },
    status: '',
    newPost: {
       text: ''
@@ -18,61 +45,82 @@ let initialState = {
 
 const profileReduce = (state = initialState, action) => {
    switch (action.type) {
-      case 'getStatus':
+      case GET_STATUS:
          return {
             ...state,
             status: action.status
          }
-      case 'updatePostChange':
+      case UPDATE_POST_CHANGE:
          return {
             ...state,
             newPost: { ...state.newPost, text: action.text }
          }
-      case 'addPost': {
+      case ADD_POST: {
          return {
             ...state,
-            commentData: [...state.commentData, { comment: state.newPost.text, like: '0' }],
+            commentData: [...state.commentData, { comment: state.newPost.text, like: '0', id: 6 }],
             newPost: { ...state.newPost, text: '' }
          }
       }
-      case 'isFetching':
+      case IS_FETCHING:
          return {
             ...state, isFetching: action.isFetching
+         }
+      case SET_USER_DATA:
+         console.log(action.userData)
+         return {
+            ...state, userProfile: { ...action.userData }
+         }
+      case GET_CHANGE_PHOTO:
+         console.log(action.data)
+         return {
+            ...state,
+            userProfile: {
+               ...state.userProfile,
+               photos: action.data
+            }
          }
       default:
          return state;
    }
 }
 
-
-export const statusAddToState = (status) => ({ type: 'getStatus', status });
-export const addPost = () => ({ type: 'addPost' });
-export const onPostChange = (text) => ({ type: 'updatePostChange', text: text });
-export const toggleIsFetching = (isFetching) => ({ type: 'isFetching', isFetching })
+export const statusAddToState = (status) => ({ type: GET_STATUS, status });
+export const addPost = () => ({ type: ADD_POST });
+export const onPostChange = (text) => ({ type: UPDATE_POST_CHANGE, text: text });
+export const toggleIsFetching = (isFetching) => ({ type: IS_FETCHING, isFetching })
+const setUserProfileData = (userData) => ({ type: SET_USER_DATA, userData })
+const getChangePhoto = (data) => ({ type: GET_CHANGE_PHOTO, data })
 
 export const setStatus = (status) => {
-   return (dispatch) => {
-      profileApi.setStatus(status)
-         .then((response) => console.log(response))
+   return async () => {
+      await profileApi.setStatus(status)
    }
 }
 
-export const getMyProfile = (myId) => {
-   return (dispatch) => {
+export const getUserProfile = (id) => {
+   return async (dispatch) => {
       dispatch(toggleIsFetching(true))
-      profileApi.MyProfile(myId)
-         .then(response => {
-            dispatch(toggleIsFetching(false))
-         })
+      const data = await profileApi.getUserProfile(id)
+      dispatch(setUserProfileData(data.data))
+      dispatch(toggleIsFetching(false))
    }
 }
 
 export const getStatus = (id) => {
-   return (dispatch) => {
-      profileApi.getStatus(id)
-         .then((response) => {
-            dispatch(statusAddToState(response.data))
-         })
+   return async (dispatch) => {
+      const response = await profileApi.getStatus(id)
+      dispatch(statusAddToState(response.data))
    }
 }
+
+export const changeUserPhoto = (event) => {
+   return async (dispatch) => {
+      const response = await profileApi.addPhotoProfile(event.target.files[0]);
+      if (response.data.resultCode === 0) {
+         dispatch(getChangePhoto(response.data.data.photos))
+      }
+   }
+}
+
 export default profileReduce;

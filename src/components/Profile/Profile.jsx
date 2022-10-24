@@ -1,32 +1,27 @@
-import React from "react";
-import Comment from "./Comments/Comment";
-import './profile.scss'
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import userNoPhoto from '../../../src/img/userNoPhoto.png'
+import { changeUserPhoto } from "../../redux/profile-reducer";
 
+const Profile = ({ userProfileData, id = 1, ...props }) => {
+   const dispatch = useDispatch()
+   useEffect(() => {
 
-const ProfileOther = React.memo((props) => {
-   const commentElement = props.commentData.map(comment => <Comment text={comment.comment} likeCount={comment.like} id={comment.id} />)
+   })
 
-   const areaMessage = React.createRef();
-
-   const onPostChange = () => {
-      const text = areaMessage.current.value;
-      props.onPostChange(text)
-   };
-
-   const sendPost = () => {
-      props.addPost()
+   const onMainPhotoSelected = (e) => {
+      if (e.target.files.length) {
+         dispatch(changeUserPhoto(e))
+      }
    }
 
    return (
-      <div className="profile">
-         <textarea onChange={onPostChange} ref={areaMessage} value={props.newPost.text}></textarea>
-         <div>
-            <button onClick={sendPost}>Send</button>
-            <button>delete</button>
-         </div>
-         {commentElement}
-      </div>
-   )
-})
+      <div>
+         {console.log(userProfileData)}
+         {(userProfileData.photos.small) ? <img src={userProfileData.photos.small} /> : <img src={userNoPhoto} />}
+         {(id === userProfileData.userId)
+            ? <input type='file' onChange={onMainPhotoSelected} /> : null}
+      </div>)
+}
 
-export default ProfileOther;
+export default Profile;

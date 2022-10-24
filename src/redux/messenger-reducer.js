@@ -14,17 +14,19 @@ let initialState = {
    messageNew: {
       message: 'Add new Message',
    }
-
 }
+const ON_CHANGE_MESSAGE = 'social/messenger/onChangeMessage';
+const SEND_MESSAGE = 'social/messenger/sendMessage';
+
 const messengerReduce = (state = initialState, action) => {
    switch (action.type) {
-      case 'onChangeMessage': {
+      case ON_CHANGE_MESSAGE: {
          return {
             ...state,
             messageNew: { message: action.text }
          }
       };
-      case 'sendMessage':
+      case SEND_MESSAGE:
          return {
             ...state,
             messageData: [...state.messageData, { id: 'user', message: state.messageNew.message }],
@@ -34,7 +36,7 @@ const messengerReduce = (state = initialState, action) => {
    }
 }
 
-export const addMessageAC = () => ({ type: 'sendMessage' });
-export const updateMessageAC = (text) => ({ type: 'onChangeMessage', text: text });
+export const addMessageAC = () => ({ type: SEND_MESSAGE });
+export const updateMessageAC = (text) => ({ type: ON_CHANGE_MESSAGE, text: text });
 
 export default messengerReduce;

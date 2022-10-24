@@ -1,13 +1,14 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import userNoPhoto from '../../img/userNoPhoto.png'
 
-const FindUser = (props) => {
+const FindUser = ({ totalCount, currentPage, users, follow, unfollow, changePage }) => {
    const arrayPages = [];
-   const endPage = Math.ceil(props.totalCount / 10)
+   const endPage = Math.ceil(totalCount / 10)
    for (let i = 1; i <= endPage; i++) {
       arrayPages.push(i)
    }
-   let curP = props.currentPage;
+   let curP = currentPage;
    let curPF = ((curP - 2) < 0) ? 0 : curP - 2;
    let curPL = curP + 2;
    let slicedPages = arrayPages.slice(curPF, curPL)
@@ -16,14 +17,20 @@ const FindUser = (props) => {
 
    return (
       <div div className="wrapper-findUser" >
-         {props.users.map((user) => <div className="wrapper-user">
-            <div className="user-find" key={user.id}>
+         {users.map((user) => <div className="wrapper-user" key={user.id}>
+            <div className="user-find" >
                <div className="ava-subscribe">
-                  <NavLink to={`/findUser/id/${user.id}`}><img src={user.photos.small} className='ava-find'></img></NavLink>
-                  {user.followed ? <button key={user.id}
-                     onClick={() => props.unfollow(user.id)
-                     }>Unsubscribe</button>
-                     : <button key={user.id} onClick={() => props.follow(user.id)
+
+                  <NavLink to={`/findUser/id/${user.id}`}>{
+                     (user.photos.small)
+                        ? <img src={user.photos.small} className='ava-find' />
+                        : <img src={userNoPhoto} className='ava-find' />}
+                  </NavLink>
+                  {user.followed ?
+                     <button key={user.id}
+                        onClick={() => unfollow(user.id)
+                        }>Unsubscribe</button>
+                     : <button key={user.id} onClick={() => follow(user.id)
                      }>Subscribe</button>
                   }
                </div>
@@ -39,7 +46,7 @@ const FindUser = (props) => {
          }
          <div className="pages">
             {slicedPages.map(page => {
-               return <div className='page-scroll' onClick={() => props.changePage(page)} key={page}>{page}</div>
+               return <div className='page-scroll' onClick={() => changePage(page)} key={page}>{page}</div>
             })}
          </div>
 
