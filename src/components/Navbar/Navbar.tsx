@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import './navbar.scss'
 
-const setActive = data => data.isActive ? 'link-Active' : '';
+const setActive = (data: any) => data.isActive ? 'link-Active' : '';
 const Navbar = () => {
    return (
       <div className="navbar">

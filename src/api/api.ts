@@ -1,3 +1,5 @@
+import { UserProfileType } from './../redux/profile-reducer';
+import { UsersType } from './../redux/find-user-reducer';
 import axios from 'axios'
 
 const instance = axios.create({
@@ -6,14 +8,19 @@ const instance = axios.create({
    headers: { 'API-KEY': 'b9394587-3e7a-482d-a7f6-fa24cc2f35ca' }
 })
 
+interface Follow {
+   resultCode: number
+   messages: string[]
+   data: {}
+}
 export const usersApi = {
    getUsers(pageNumber = 1) {
       return instance.get(`users?page=${pageNumber}`)
    },
-   follow(userId) {
-      return instance.post(`follow/${userId}`)
+   follow(userId: number) {
+      return instance.post<Follow>(`follow/${userId}`)
    },
-   unfollow(userId) {
+   unfollow(userId: number) {
       return instance.delete(`follow/${userId}`)
    },
 }
@@ -23,16 +30,16 @@ export const profileApi = {
    myAccount() {
       return instance.get('auth/me')
    },
-   setStatus(status) {
+   setStatus(status: string) {
       return instance.put('/profile/status', { status })
    },
-   getUserProfile(id) {
-      return instance.get(`profile/${id}`)
+   getUserProfile(id: number) {
+      return instance.get<UserProfileType>(`profile/${id}`)
    },
-   getStatus(id) {
+   getStatus(id: number) {
       return instance.get(`profile/status/${id}`)
    },
-   addPhotoProfile(photoFile) {
+   addPhotoProfile(photoFile: any) {
       const formData = new FormData();
       formData.append("image", photoFile);
       return instance.put(`profile/photo`, formData);

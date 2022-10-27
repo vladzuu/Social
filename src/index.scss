@@ -10,14 +10,13 @@
 html,
 body {
 	height: 100vh;
-	background-color: #333;
-	font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
-	color: #fff;
+	background-color: #efefef;
+	color: #1A2027;
 	font-size: 16px;
 	line-height: 24px;
 }
 a {
-	color: #794f45;
+	color: #1a1717;
 }
 h1 {
 	font-size: 40px;
@@ -34,12 +33,11 @@ ul {
 }
 /* ================ */
 .Wrapper{
-   max-height: 100vh;
+   
    min-height: 100vh;
    display: grid;
-   margin: 10px;
    grid-template: minmax(100px, auto) 1fr minmax(50px, auto) / 170px 1fr;
-   gap: 10px;
+   gap: 0px;
    grid-template-areas: 
                         "Header Header"
                         "navbar main"
@@ -47,20 +45,37 @@ ul {
 
 }
 .Header{
-background-color: rgb(85, 85, 142);
+// width: 100vh;
+height: 10vh;
+position:sticky;
+top:0px;
+background-color: rgb(255, 255, 255, 0.7);
 grid-area: Header;
 border-radius: 4px;
 }
-.main{
-   grid-area: main;
+.navbar{
+   position: sticky;
+   top: 10vh;
+   background-color: rgb(255, 255, 255);
+   grid-area: navbar;
+   padding: 20px;
+   color: black;
+   border-radius: 4px;
+   height: 90vh;
 }
 .main{
-   background-color: rebeccapurple;
+   grid-area: main;
+   margin: 0px auto;
+   width: 800px;
+   background-color: rgb(255, 255, 255, 0.7);
    border-radius: 4px;
-   }
+
+}
 
 .footer{
+   margin: 0px auto;
+   width: 800px;
    grid-area: footer;
-background-color: green;
+background-color: rgba(255, 255, 255, 0.7);
 border-radius: 4px;
 }

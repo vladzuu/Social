@@ -1,3 +1,4 @@
+import { Button } from "@mui/material";
 import React from "react";
 import { NavLink } from "react-router-dom";
 import userNoPhoto from '../../img/userNoPhoto.png'
@@ -27,11 +28,12 @@ const FindUser = ({ totalCount, currentPage, users, follow, unfollow, changePage
                         : <img src={userNoPhoto} className='ava-find' />}
                   </NavLink>
                   {user.followed ?
-                     <button key={user.id}
+                     <Button variant="contained" key={user.id}
                         onClick={() => unfollow(user.id)
-                        }>Unsubscribe</button>
-                     : <button key={user.id} onClick={() => follow(user.id)
-                     }>Subscribe</button>
+                        }>Unfollow</Button>
+                     : <Button variant="contained" key={user.id}
+                        onClick={() => follow(user.id)
+                        }>Subscribe</Button>
                   }
                </div>
                <div className="info-user">

@@ -1,4 +1,21 @@
-let initialState = {
+
+
+type DialogData = {
+   id: number
+   name: string
+   ava: string
+}
+type MessageData = {
+   id: string
+   message: string
+}
+type InitialStateType = {
+   dialogData: DialogData[]
+   messageData: MessageData[]
+   messageNew: { message: string }
+}
+
+let initialState: InitialStateType = {
    dialogData: [
       { id: 1, name: 'person1', ava: 'https://lifehacker.ru/special/fujifilm/dist/static/img/5.2410a2d.jpg' },
       { id: 2, name: 'person2', ava: 'https://www.biletik.aero/upload/medialibrary/807/807f262b60da392f1e09aa6d33f20a9b.png' },
@@ -15,10 +32,11 @@ let initialState = {
       message: 'Add new Message',
    }
 }
+
 const ON_CHANGE_MESSAGE = 'social/messenger/onChangeMessage';
 const SEND_MESSAGE = 'social/messenger/sendMessage';
 
-const messengerReduce = (state = initialState, action) => {
+const messengerReduce = (state = initialState, action: any): InitialStateType => {
    switch (action.type) {
       case ON_CHANGE_MESSAGE: {
          return {
@@ -37,6 +55,6 @@ const messengerReduce = (state = initialState, action) => {
 }
 
 export const addMessageAC = () => ({ type: SEND_MESSAGE });
-export const updateMessageAC = (text) => ({ type: ON_CHANGE_MESSAGE, text: text });
+export const updateMessageAC = (text: string) => ({ type: ON_CHANGE_MESSAGE, text: text });
 
 export default messengerReduce;

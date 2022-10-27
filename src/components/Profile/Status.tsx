@@ -1,28 +1,33 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, ChangeEvent } from "react";
+import { setStatus } from "../../redux/profile-reducer";
+import { useAppDispatch } from "../../redux/redux-store";
 
-
-const Status = (props) => {
+type PropsType = {
+   status: string
+   setStatus: (status: string) => void
+}
+const Status = (props: PropsType) => {
+   const dispatch = useAppDispatch()
 
    let [editMode, setEditMode] = useState(false)
-   let [status, setStatus] = useState(props.status)
+   let [status, setStatusLocal] = useState(props.status)
 
    useEffect(() => {
-      setStatus(props.status)
+      setStatusLocal(props.status)
    }, [props.status])
-
 
    const activateEditMode = () => {
       setEditMode(true)
    }
+
    const deactivateEditMode = () => {
       setEditMode(false)
-      props.setStatus(status)
+      dispatch(setStatus(status))
    }
 
-   const changeStatus = (e) => {
-      setStatus(e.target.value)
+   const changeStatus = (e: ChangeEvent<HTMLInputElement>) => {
+      setStatusLocal(e.target.value)
    }
-
 
    return (
       <div>
@@ -39,8 +44,5 @@ const Status = (props) => {
       </div>
    )
 }
-
-
-
 
 export default Status;

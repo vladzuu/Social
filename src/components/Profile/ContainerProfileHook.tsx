@@ -1,22 +1,21 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Navigate } from 'react-router-dom'
 import './profile.scss'
-import { onPostChange, addPost, toggleIsFetching, setStatus, getUserProfile, getStatus } from "../../redux/profile-reducer";
+import { setStatus, getUserProfile, getStatus } from "../../redux/profile-reducer";
 import Preloader from "../Common/Preloader/Preloader";
-import Status from "./StatusHook";
+import Status from "./Status";
 import Profile from "./Profile";
 import ProfilePost from "./ProfilePost";
 
 const ContainerProfile = () => {
-   const status = useSelector(state => state.profileReduce.status);
-   const userProfileData = useSelector(state => state.profileReduce.userProfile)
-   const commentData = useSelector(state => state.profileReduce.commentData);
-   const newPost = useSelector(state => state.profileReduce.newPost);
-   const isAuth = useSelector(state => state.profileReduce.isAuth);
-   const myId = useSelector(state => state.auth.id);
-   const isFetching = useSelector(state => state.profileReduce.isFetching);
-   const dispatch = useDispatch();
+   const status = useSelector((state: any) => state.profileReduce.status);
+   const userProfileData = useSelector((state: any) => state.profileReduce.userProfile)
+   const commentData = useSelector((state: any) => state.profileReduce.commentData);
+   const newPost = useSelector((state: any) => state.profileReduce.newPost);
+   const isAuth = useSelector((state: any) => state.profileReduce.isAuth);
+   const myId = useSelector((state: any) => state.auth.id);
+   const isFetching = useSelector((state: any) => state.profileReduce.isFetching);
+   const dispatch = useDispatch<any>();
 
    useEffect(() => {
       if (!!myId) {
@@ -37,8 +36,7 @@ const ContainerProfile = () => {
          <ProfilePost
             commentData={commentData}
             newPost={newPost}
-            onPostChange={onPostChange}
-            addPost={addPost}
+            userData={userProfileData}
          />
       </>
    )
