@@ -22,11 +22,12 @@ const FindUser = ({ totalCount, currentPage, users, follow, unfollow, changePage
             <div className="user-find" >
                <div className="ava-subscribe">
 
-                  <NavLink to={`/findUser/id/${user.id}`}>{
-                     (user.photos.small)
+                  <NavLink to={`/findUser/id/${user.id}`}>
+                     {(user.photos.small)
                         ? <img src={user.photos.small} className='ava-find' />
                         : <img src={userNoPhoto} className='ava-find' />}
                   </NavLink>
+
                   {user.followed ?
                      <Button variant="contained" key={user.id}
                         onClick={() => unfollow(user.id)

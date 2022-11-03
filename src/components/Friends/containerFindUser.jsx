@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import "./findUser.scss"
-import { subscribe, unsubscribe, setCurrentPage, getUsers, follow, unfollow } from "../../redux/find-user-reducer";
+import { subscribe, unsubscribe, setCurrentPage, getUsersSearch, follow, unfollow } from "../../redux/find-user-slice";
 import FindUser from "./FindUser";
 import Preloader from "../Common/Preloader/Preloader";
 import { Navigate } from 'react-router-dom'
@@ -9,18 +9,18 @@ import { Navigate } from 'react-router-dom'
 class ContainerFindUser extends React.Component {
 
    componentDidMount() {
-      this.props.getUsers('1')
+      this.props.getUsersSearch('1')
    };
 
    onChangePage = (pageNumber) => {
-      this.props.getUsers(pageNumber)
+      this.props.getUsersSearch(pageNumber)
    }
 
    render = () => {
+      { if (this.props.isFetching) { return <Preloader /> } }
       if (!this.props.isAuth) return <Navigate to={'/login'} />
       return (
          <>
-            <Preloader isFetching={this.props.isFetching} />
             <FindUser
                changePage={this.onChangePage}
                users={this.props.users}
@@ -50,7 +50,7 @@ const mapStateToProps = (state) => {
 }
 
 const UserElement = connect(mapStateToProps, {
-   subscribe, unsubscribe, setCurrentPage, getUsers, follow, unfollow
+   subscribe, unsubscribe, setCurrentPage, getUsersSearch, follow, unfollow
 })(ContainerFindUser)
 
 

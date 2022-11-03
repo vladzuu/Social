@@ -28,10 +28,12 @@
    .ava-subscribe{
       display: flex;
       flex-direction: column;
+      align-items: center;
    }
  
    .info-user{
-      width: 100%;
+      flex-grow: 1;
+      // width: 100%;
       margin: 0px 0px 20px 20px;
       border-radius: 5px;
       border: 2px black solid;

@@ -1,7 +1,42 @@
-.profile{
-
-   button{
+.changeAva{
+   
+   input{
+      display: none;
       margin: 10px;
+      padding: 20px;
+   }
+   label{
+      position: absolute;
+      top: 165px;
+      left: 175px;
+      display: block;
+      cursor: pointer;
    }
 }
+.avaProfile{
+   width: 200px;
+   height: 200px;
+   border-radius: 50%;
+   margin: 20px 50px 20px 50px;
+}
 
+.main{
+   position: relative;
+   display: flex;
+   max-width: 800px;
+   min-width: 350px;
+   flex-wrap: wrap;
+   flex-grow: 1;
+   flex-direction: column;
+}
+.post-send-area{
+   margin: 20px 50px 20px 50px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+
+}
+.spinner{
+   position: absolute;
+   top: 45%;
+}

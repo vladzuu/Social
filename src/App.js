@@ -13,6 +13,7 @@ import UserElement from './components/Friends/containerFindUser';
 import UserSelect from './components/Friends/containerUser';
 import Login from './components/Login/login';
 import ContainerProfile from './components/Profile/ContainerProfileHook';
+import PageNoFound from './components/NoFound/page-no-found';
 
 
 
@@ -24,7 +25,7 @@ function App(props) {
                <div className="Wrapper">
                   <HeaderConnect />
                   <Navbar />
-                  <div className='main'>
+                  <div className='main-container'>
                      <Routes>
                         <Route path='profile' element={
                            <ContainerProfile />} />
@@ -34,6 +35,7 @@ function App(props) {
                         <Route path='findUser' element={<UserElement />} />
                         <Route path='findUser/id/:userId' element={<UserSelect />} />
                         <Route path='login' element={<Login />} />
+                        <Route path='*' element={<PageNoFound />} />
                      </Routes>
                   </div>
                   <Footer />

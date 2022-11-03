@@ -1,9 +1,11 @@
-
 import React, { ChangeEvent, useEffect } from "react";
 import { useSelector } from "react-redux";
 import userNoPhoto from '../../../src/img/userNoPhoto.png'
 import { changeUserPhoto, UserProfileType } from "../../redux/profile-reducer";
 import { useAppDispatch } from "../../redux/redux-store";
+import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
+import { color } from "@mui/system";
+import { blue } from "@mui/material/colors";
 
 
 interface PropsType {
@@ -14,10 +16,10 @@ interface PropsType {
 
 const Profile = ({ userProfileData, id, ...props }: PropsType) => {
    const dispatch = useAppDispatch()
-   const idAuthUser = useSelector((state: any) => state.auth.id)
+   const idAuthUser = useSelector((state: any) => state.auth.user.id)
    useEffect(() => {
 
-   })
+   }, [])
 
    const onMainPhotoSelected = (e: ChangeEvent<HTMLInputElement>) => {
       if (e.target.files) {
@@ -28,11 +30,22 @@ const Profile = ({ userProfileData, id, ...props }: PropsType) => {
    }
 
    return (
-      <div>
+      <div >
+         {(userProfileData.photos.large)
+            ? <img className="avaProfile" src={userProfileData.photos.large} />
+            : <img className="avaProfile" src={userNoPhoto} />}
 
-         {(userProfileData.photos.small) ? <img src={userProfileData.photos.small} /> : <img src={userNoPhoto} />}
          {(id === idAuthUser)
-            ? <input type='file' onChange={onMainPhotoSelected} /> : null}
+            ? <div className="changeAva">
+               <input type='file' id="avaChange" onChange={onMainPhotoSelected} />
+               <label htmlFor="avaChange"  ><AddCircleRoundedIcon sx={{ fontSize: 45, color: '#1976d2' }} /> </label>
+            </div>
+
+
+
+
+
+            : null}
       </div>)
 }
 

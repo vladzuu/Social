@@ -10,12 +10,13 @@
 html,
 body {
 	height: 100vh;
-	background-color: #efefef;
+	background-color: #ffffff;
 	color: #1A2027;
 	font-size: 16px;
 	line-height: 24px;
 }
 a {
+   text-decoration: none;
 	color: #1a1717;
 }
 h1 {
@@ -36,46 +37,68 @@ ul {
    
    min-height: 100vh;
    display: grid;
-   grid-template: minmax(100px, auto) 1fr minmax(50px, auto) / 170px 1fr;
+   grid-template: minmax(70px, auto) 1fr minmax(50px, auto) / 170px 1fr;
    gap: 0px;
    grid-template-areas: 
                         "Header Header"
                         "navbar main"
-                        "footer footer"; 
+                        "navbar footer"; 
 
 }
 .Header{
-// width: 100vh;
-height: 10vh;
 position:sticky;
 top:0px;
-background-color: rgb(255, 255, 255, 0.7);
 grid-area: Header;
-border-radius: 4px;
+z-index: 10;
+
 }
+
 .navbar{
-   position: sticky;
-   top: 10vh;
+   
+   display: flex;
+   flex-direction: column;
+   position: fixed;
+   top: 70px;
+   max-height: 80vh;
    background-color: rgb(255, 255, 255);
    grid-area: navbar;
-   padding: 20px;
+   padding: 20px 5px 20px 10 px;
    color: black;
    border-radius: 4px;
-   height: 90vh;
 }
-.main{
-   grid-area: main;
-   margin: 0px auto;
-   width: 800px;
-   background-color: rgb(255, 255, 255, 0.7);
-   border-radius: 4px;
 
+@media screen and (max-width: 700px) {
+   .navbar{
+      transform: translateX(-100%);
+      z-index: 10;
+      &.active{
+         transform: translateX(0%)
+      }
+   } 
+   .Wrapper{
+      grid-template: minmax(70px, auto) 1fr minmax(50px, auto) / 1fr;
+      gap: 0px;
+      grid-template-areas: 
+                           "Header"
+                           "main"
+                           "footer"; 
+   
+   }
+   
+}
+.main-container{
+   background-color: #ffffff;
+   position: relative;
+   grid-area: main;
+   background-color: rgba(239, 238, 238, 0.7);
+   border-radius: 4px;
+   display: flex;
+   justify-content: center;
 }
 
 .footer{
-   margin: 0px auto;
-   width: 800px;
    grid-area: footer;
-background-color: rgba(255, 255, 255, 0.7);
-border-radius: 4px;
+   background-color: rgba(255, 255, 255, 0.7);
+   border-radius: 4px;
+   text-align: center;
 }

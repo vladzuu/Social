@@ -6,6 +6,7 @@ import Preloader from "../Common/Preloader/Preloader";
 import Status from "./Status";
 import Profile from "./Profile";
 import ProfilePost from "./ProfilePost";
+import { Navigate } from "react-router-dom";
 
 const ContainerProfile = () => {
    const status = useSelector((state: any) => state.profileReduce.status);
@@ -13,7 +14,7 @@ const ContainerProfile = () => {
    const commentData = useSelector((state: any) => state.profileReduce.commentData);
    const newPost = useSelector((state: any) => state.profileReduce.newPost);
    const isAuth = useSelector((state: any) => state.profileReduce.isAuth);
-   const myId = useSelector((state: any) => state.auth.id);
+   const myId = useSelector((state: any) => state.auth.user.id);
    const isFetching = useSelector((state: any) => state.profileReduce.isFetching);
    const dispatch = useDispatch<any>();
 
@@ -24,10 +25,10 @@ const ContainerProfile = () => {
       }
    }, [myId])
 
-   // { if (!isAuth) return <Navigate to={'/login'} /> }
-   { if (isFetching) return <Preloader isFetching={isFetching} /> }
+   { if (isAuth) return <Navigate to={'/login'} /> }
+   { if (isFetching) return <Preloader /> }
    return (
-      <>
+      <div className="main">
 
          <Profile
             id={myId}
@@ -38,7 +39,7 @@ const ContainerProfile = () => {
             newPost={newPost}
             userData={userProfileData}
          />
-      </>
+      </div>
    )
 }
 

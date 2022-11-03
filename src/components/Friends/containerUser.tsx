@@ -20,9 +20,9 @@ const ContainerSelectedUser = () => {
       }
    }, [params.userId])
 
+   if (isFetching) return <Preloader />
    return (
       <>
-         <Preloader isFetching={isFetching} />
          <Profile
             id={id}
             userProfileData={userProfileData} />

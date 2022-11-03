@@ -30,7 +30,7 @@ const Status = (props: PropsType) => {
    }
 
    return (
-      <div>
+      <div className="test">
          {!editMode &&
             <div>
                <span onClick={activateEditMode}>{status}</span>

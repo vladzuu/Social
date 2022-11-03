@@ -1,5 +1,6 @@
+import { Edit, Send } from "@mui/icons-material";
 import { Button, TextField } from "@mui/material";
-import React from "react";
+import React, { useRef } from "react";
 import { onPostChange, addPost, UserProfileType } from "../../redux/profile-reducer";
 import { CommentDataType } from "../../redux/profile-reducer";
 import { useAppDispatch } from "../../redux/redux-store";
@@ -13,8 +14,11 @@ interface PropsType {
    userData: UserProfileType
 }
 const ProfilePost = React.memo((props: PropsType) => {
+
    const commentElement = props.commentData.map(comment => {
       return <Comment
+         key={comment.id}
+         userData={props.userData}
          comment={comment.comment}
          like={comment.like}
          id={comment.id}
@@ -22,7 +26,8 @@ const ProfilePost = React.memo((props: PropsType) => {
    })
 
    const dispatch = useAppDispatch()
-   const areaMessage = React.createRef<HTMLTextAreaElement>();
+
+   const areaMessage = useRef<HTMLTextAreaElement>(null)
 
    const PostChange = () => {
       if (areaMessage.current) {
@@ -37,13 +42,13 @@ const ProfilePost = React.memo((props: PropsType) => {
 
    return (
       <div className="profile">
-         <textarea onChange={PostChange} ref={areaMessage} value={props.newPost.text} />
-         <div>
-
-            <Button variant="contained" onClick={sendPost}>Send</Button>
-            <Button variant="contained" onClick={sendPost}>delete</Button>
+         <div className="post-send-area">
+            <textarea onChange={PostChange} ref={areaMessage} value={props.newPost.text} />
+            <Button variant="contained" onClick={sendPost} endIcon={<Send />} >Send</Button>
          </div>
-         {commentElement}
+         <div className="container-posts">
+            {commentElement}
+         </div>
       </div>
    )
 })

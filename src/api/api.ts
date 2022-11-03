@@ -1,5 +1,5 @@
 import { UserProfileType } from './../redux/profile-reducer';
-import { UsersType } from './../redux/find-user-reducer';
+import { UsersType } from '../redux/find-user-slice';
 import axios from 'axios'
 
 const instance = axios.create({
