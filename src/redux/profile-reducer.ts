@@ -14,6 +14,15 @@ export type CommentDataType = {
    like: number
    id: number
 }
+type InitialStateType = {
+   userProfile: UserProfileType
+   status: string
+   newPost: {
+      text: string
+   }
+   commentData: CommentDataType[]
+   isFetching: boolean
+}
 export type UserProfileType = {
 
    aboutMe: null | string
@@ -36,15 +45,29 @@ export type UserProfileType = {
       large: null | string
    }
 }
-type InitialStateType = {
-   userProfile: UserProfileType
-   status: string
-   newPost: {
-      text: string
-   }
-   commentData: CommentDataType[]
-   isFetching: boolean
+
+export let userProfile: UserProfileType = {
+   aboutMe: null,
+   contacts: {
+      facebook: null,
+      website: null,
+      vk: null,
+      twitter: null,
+      instagram: null,
+      youtube: null,
+      github: null,
+      mainLink: null
+   },
+   lookingForAJob: false,
+   lookingForAJobDescription: null,
+   fullName: '',
+   userId: null,
+   photos: {
+      small: null,
+      large: null,
+   },
 }
+
 
 let initialState: InitialStateType = {
    userProfile: {
@@ -68,10 +91,6 @@ let initialState: InitialStateType = {
          large: null
       }
    },
-   status: '',
-   newPost: {
-      text: ''
-   },
    commentData: [
       { comment: 'My first comment!', like: 34, id: 1 },
       { comment: 'Its comment', like: 12, id: 2 },
@@ -79,6 +98,10 @@ let initialState: InitialStateType = {
       { comment: 'What what what what?', like: 23, id: 4 },
       { comment: "ok, ok, ok, ok!", like: 5, id: 5 },
    ],
+   status: '',
+   newPost: {
+      text: ''
+   },
    isFetching: false
 }
 

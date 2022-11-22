@@ -3,88 +3,88 @@ import { createSlice } from '@reduxjs/toolkit';
 import { usersApi } from '../api/api';
 
 export type UsersType = {
-   followed: boolean
-   id: null | number
-   name: null | string
-   photos: {
-      large: null | string
-      small: null | string
-   }
-   status: null | string
-   uniqueUrlName: null | string
+  followed: boolean
+  id: null | number
+  name: null | string
+  photos: {
+    large: null | string
+    small: null | string
+  }
+  status: null | string
+  uniqueUrlName: null | string
 }
 type InitialStateType = {
-   users: UsersType[]
-   currentPage: number
-   totalCount: number
-   isFetching: boolean
+  users: UsersType[]
+  currentPage: number
+  totalCount: number
+  isFetching: boolean
 }
 let initialState: InitialStateType = {
-   users: [],
-   currentPage: 0,
-   totalCount: 0,
-   isFetching: false
+  users: [],
+  currentPage: 1,
+  totalCount: 0,
+  isFetching: false
 }
 
 const findUserSlice = createSlice({
-   name: "findUser",
-   initialState,
-   reducers: {
-      subscribe: (state, action) => {
-         state.users = state.users.map((user: any) => {
-            if (action.payload === user.id) {
-               return { ...user, followed: true }
-            }
-            return user
+  name: "findUser",
+  initialState,
+  reducers: {
+    subscribe: (state, action) => {
+      state.users = state.users.map((user: any) => {
+        if (action.payload === user.id) {
+          return { ...user, followed: true }
+        }
+        return user
 
-         })
-      },
-      unsubscribe: (state, action) => {
-         state.users = state.users.map((user: any) => {
-            if (action.payload === user.id) {
-               return { ...user, followed: false }
-            }
-            return user
-         })
-      },
-      setState: (state, action) => {
-         state.users = action.payload
-      },
-      setCount: (state, action) => {
-         state.totalCount = action.payload
-      },
-      setCurrentPage: (state, action) => {
-         state.currentPage = action.payload
-      },
-      toggleIsFetching: (state, action) => {
-         state.isFetching = action.payload
-      },
-   }
+      })
+    },
+    unsubscribe: (state, action) => {
+      state.users = state.users.map((user: any) => {
+        if (action.payload === user.id) {
+          return { ...user, followed: false }
+        }
+        return user
+      })
+    },
+    setState: (state, action) => {
+      state.users = action.payload
+    },
+    setCount: (state, action) => {
+      state.totalCount = action.payload
+    },
+    setCurrentPage: (state, action) => {
+      state.currentPage = action.payload
+    },
+    toggleIsFetching: (state, action) => {
+      state.isFetching = action.payload
+    },
+  }
 })
 
 export const { setCount, setCurrentPage, setState, subscribe, unsubscribe, toggleIsFetching } = findUserSlice.actions
 
 
 export const getUsersSearch = createAsyncThunk(
-   'findUser/getUserSearch',
-   async (pageNumber: number, { dispatch }) => {
-      dispatch(toggleIsFetching(true))
-      const response = await usersApi.getUsers(pageNumber)
-      dispatch(toggleIsFetching(false))
-      dispatch(setState(response.data.items))
-      dispatch(setCount(response.data.totalCount))
-      dispatch(setCurrentPage(pageNumber))
-   }
+  'findUser/getUserSearch',
+  async (pageNumber: number, { dispatch }) => {
+    dispatch(toggleIsFetching(true))
+    const response = await usersApi.getUsers(pageNumber)
+    dispatch(toggleIsFetching(false))
+    dispatch(setState(response.data.items))
+    dispatch(setCount(response.data.totalCount))
+    dispatch(setCurrentPage(pageNumber))
+  }
 )
 
 export const follow = createAsyncThunk(
-   'findUser/follow',
-   async (userId: number, { dispatch }) => {
-      const response = await usersApi.follow(userId)
-      if (response.data.resultCode === 0) {
-         dispatch(subscribe(userId))
-      }
-   }
+  'findUser/follow',
+  async (userId: number, { dispatch }) => {
+    const response = await usersApi.follow(userId)
+    if (response.data.resultCode === 0) {
+      dispatch(subscribe(userId))
+    }
+  }
 )
 
 // export const follow = (userId: number) => {
@@ -96,12 +96,12 @@ export const follow = createAsyncThunk(
 //    }
 // }
 export const unfollow = (userId: number) => {
-   return async (dispatch: any) => {
-      const response = await usersApi.unfollow(userId)
-      if (response.data.resultCode === 0) {
-         dispatch(unsubscribe(userId))
-      }
-   }
+  return async (dispatch: any) => {
+    const response = await usersApi.unfollow(userId)
+    if (response.data.resultCode === 0) {
+      dispatch(unsubscribe(userId))
+    }
+  }
 }
 export default findUserSlice.reducer;
 

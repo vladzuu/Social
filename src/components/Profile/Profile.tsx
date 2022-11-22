@@ -2,7 +2,7 @@ import React, { ChangeEvent, useEffect } from "react";
 import { useSelector } from "react-redux";
 import userNoPhoto from '../../../src/img/userNoPhoto.png'
 import { changeUserPhoto, UserProfileType } from "../../redux/profile-reducer";
-import { useAppDispatch } from "../../redux/redux-store";
+import { RootState, useAppDispatch } from "../../redux/redux-store";
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 import { color } from "@mui/system";
 import { blue } from "@mui/material/colors";
@@ -10,13 +10,13 @@ import { blue } from "@mui/material/colors";
 
 interface PropsType {
    userProfileData: UserProfileType
-   id: number
+   id: number | null
 }
 
 
 const Profile = ({ userProfileData, id, ...props }: PropsType) => {
    const dispatch = useAppDispatch()
-   const idAuthUser = useSelector((state: any) => state.auth.user.id)
+   const idAuthUser = useSelector((state: RootState) => state.auth.user.id)
    useEffect(() => {
 
    }, [])

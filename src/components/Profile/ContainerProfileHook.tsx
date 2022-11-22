@@ -7,15 +7,16 @@ import Status from "./Status";
 import Profile from "./Profile";
 import ProfilePost from "./ProfilePost";
 import { Navigate } from "react-router-dom";
+import { RootState } from "../../redux/redux-store";
 
 const ContainerProfile = () => {
-   const status = useSelector((state: any) => state.profileReduce.status);
-   const userProfileData = useSelector((state: any) => state.profileReduce.userProfile)
-   const commentData = useSelector((state: any) => state.profileReduce.commentData);
-   const newPost = useSelector((state: any) => state.profileReduce.newPost);
-   const isAuth = useSelector((state: any) => state.profileReduce.isAuth);
-   const myId = useSelector((state: any) => state.auth.user.id);
-   const isFetching = useSelector((state: any) => state.profileReduce.isFetching);
+   const status = useSelector((state: RootState) => state.profileReduce.status);
+   const userProfileData = useSelector((state: RootState) => state.profileReduce.userProfile)
+   const commentData = useSelector((state: RootState) => state.profileReduce.commentData);
+   const newPost = useSelector((state: RootState) => state.profileReduce.newPost);
+   const isAuth = useSelector((state: RootState) => state.auth.isAuth);
+   const myId = useSelector((state: RootState) => state.auth.user.id);
+   const isFetching = useSelector((state: RootState) => state.profileReduce.isFetching);
    const dispatch = useDispatch<any>();
 
    useEffect(() => {
@@ -25,8 +26,8 @@ const ContainerProfile = () => {
       }
    }, [myId])
 
-   { if (isAuth) return <Navigate to={'/login'} /> }
-   { if (isFetching) return <Preloader /> }
+   if (!isAuth) return <Navigate to={'/login'} />
+   if (isFetching) return <Preloader />
    return (
       <div className="main">
 

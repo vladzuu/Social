@@ -54,7 +54,7 @@ const messengerReduce = (state = initialState, action: any): InitialStateType =>
    }
 }
 
-export const addMessageAC = () => ({ type: SEND_MESSAGE });
-export const updateMessageAC = (text: string) => ({ type: ON_CHANGE_MESSAGE, text: text });
+export const addMessage = () => ({ type: SEND_MESSAGE });
+export const updateMessage = (text: string) => ({ type: ON_CHANGE_MESSAGE, text: text });
 
 export default messengerReduce;
